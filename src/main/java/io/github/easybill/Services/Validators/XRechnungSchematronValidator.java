@@ -21,12 +21,12 @@ public final class XRechnungSchematronValidator
     public XRechnungSchematronValidator() {
         ciiSchematron =
             new SchematronResourceSCH(
-                new ClassPathResource("/XRechnung/XRechnung_2.3_CII.sch")
+                new ClassPathResource("/XRechnung/XRechnung_3.2_CII.sch")
             );
 
         ublSchematron =
             new SchematronResourceSCH(
-                new ClassPathResource("/XRechnung/XRechnung_2.3_UBL.sch")
+                new ClassPathResource("/XRechnung/XRechnung_3.2_UBL.sch")
             );
 
         if (!ciiSchematron.isValidSchematron()) {

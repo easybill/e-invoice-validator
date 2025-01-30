@@ -47,7 +47,7 @@
       <active pattern="peppol-ubl-pattern-1"/>
       <active pattern="peppol-ubl-pattern-2"/>
    </phase>
-   <include href="XRechnung_2.3_COMMON.sch"/>
+   <include href="XRechnung_3.2_COMMON.sch"/>
    <!--BEGIN Functions from PEPPOL-->
    <function xmlns="http://www.w3.org/1999/XSL/Transform"
              name="u:gln"
