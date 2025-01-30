@@ -5,6 +5,7 @@ import io.github.easybill.Dtos.ErrorMessage;
 import io.github.easybill.Exceptions.InvalidProfileException;
 import io.github.easybill.Exceptions.InvalidXmlException;
 import io.github.easybill.Exceptions.ParsingException;
+import io.github.easybill.Exceptions.ValidationChainException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -54,6 +55,17 @@ public final class GlobalExceptionInterceptor
                 .status(422, "Unprocessable Content")
                 .entity(
                     new ErrorMessage("The parsing of the provided XML failed.")
+                )
+                .build();
+        }
+
+        if (exception instanceof ValidationChainException) {
+            return Response
+                .status(422, "Unprocessable Content")
+                .entity(
+                    new ErrorMessage(
+                        "During validation one of the applied validator failed."
+                    )
                 )
                 .build();
         }

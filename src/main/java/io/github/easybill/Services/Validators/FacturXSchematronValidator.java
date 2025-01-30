@@ -15,15 +15,27 @@ import java.util.Optional;
 @Singleton
 public final class FacturXSchematronValidator implements ISchematronValidator {
 
-    private final SchematronResourceSCH ciiSchematron;
+    private final SchematronResourceSCH en16931Schematron;
+    private final SchematronResourceSCH facturXSchematron;
 
     public FacturXSchematronValidator() {
-        ciiSchematron =
+        en16931Schematron =
+            new SchematronResourceSCH(
+                new ClassPathResource("/EN16931/EN16931_1.3.13_CII.sch")
+            );
+
+        facturXSchematron =
             new SchematronResourceSCH(
                 new ClassPathResource("/FacturX/Factur-X_1.07.2_EXTENDED.sch")
             );
 
-        if (!ciiSchematron.isValidSchematron()) {
+        if (!en16931Schematron.isValidSchematron()) {
+            throw new RuntimeException(
+                "Schematron validation for EN16931 CII failed"
+            );
+        }
+
+        if (!facturXSchematron.isValidSchematron()) {
             throw new RuntimeException(
                 "Schematron validation for Factur-X Extended CII failed"
             );
@@ -32,7 +44,7 @@ public final class FacturXSchematronValidator implements ISchematronValidator {
 
     @Override
     public boolean validateSchematron() {
-        return ciiSchematron.isValidSchematron();
+        return facturXSchematron.isValidSchematron();
     }
 
     @Override
@@ -49,21 +61,31 @@ public final class FacturXSchematronValidator implements ISchematronValidator {
         ValidationRequest validationRequest
     ) throws Exception {
         try {
-            var report = Optional.ofNullable(
-                ciiSchematron.applySchematronValidationToSVRL(
-                    new ByteArrayWrapper(
-                        validationRequest
-                            .xml()
-                            .getBytes(validationRequest.xmlCharset()),
-                        false
-                    )
+            byte[] bytes = validationRequest
+                .xml()
+                .getBytes(validationRequest.xmlCharset());
+
+            var en16931Report = Optional.ofNullable(
+                en16931Schematron.applySchematronValidationToSVRL(
+                    new ByteArrayWrapper(bytes, false)
                 )
             );
 
-            return report.map(schematronOutputType ->
+            if (en16931Report.isEmpty()) {
+                return Optional.empty();
+            }
+
+            var facutrxReport = Optional.ofNullable(
+                facturXSchematron.applySchematronValidationToSVRL(
+                    new ByteArrayWrapper(bytes, false)
+                )
+            );
+
+            return facutrxReport.map(schematronOutputType ->
                 ValidationResult.of(
                     XmlProfileType.FACTURX_EXTENDED,
                     validationRequest,
+                    en16931Report.get(),
                     schematronOutputType
                 )
             );
