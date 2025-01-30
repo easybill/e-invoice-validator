@@ -1,7 +1,6 @@
 package io.github.easybill.Dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.helger.schematron.svrl.jaxb.SchematronOutputType;
 import io.github.easybill.Enums.XmlProfileType;
 import java.util.Arrays;
 import java.util.List;
@@ -23,17 +22,14 @@ public record ValidationResult(
     public static ValidationResult of(
         XmlProfileType xmlProfileType,
         ValidationRequest validationRequest,
-        SchematronOutputType... schematronOutputTypes
+        ValidatorResult... validatorResults
     ) {
         return new ValidationResult(
             new ValidationResultMetaData(
                 validationRequest.xmlSyntaxType(),
                 xmlProfileType
             ),
-            Arrays
-                .stream(schematronOutputTypes)
-                .map(ValidatorResult::of)
-                .toList()
+            Arrays.stream(validatorResults).toList()
         );
     }
 }

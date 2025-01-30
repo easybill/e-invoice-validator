@@ -6,6 +6,7 @@ import com.helger.schematron.sch.SchematronResourceSCH;
 import io.github.easybill.Contracts.ISchematronValidator;
 import io.github.easybill.Dtos.ValidationRequest;
 import io.github.easybill.Dtos.ValidationResult;
+import io.github.easybill.Dtos.ValidatorResult;
 import io.github.easybill.Enums.XMLSyntaxType;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.ParsingException;
@@ -84,8 +85,16 @@ public final class PeppolSchematronValidator implements ISchematronValidator {
                 ValidationResult.of(
                     XmlProfileType.PEPPOL_30,
                     validationRequest,
-                    en16931Report.get(),
-                    schematronOutputType
+                    ValidatorResult.of(
+                        "EN16931 UBL",
+                        "1.3.13",
+                        en16931Report.get()
+                    ),
+                    ValidatorResult.of(
+                        "Peppol BIS UBL",
+                        "3.0",
+                        schematronOutputType
+                    )
                 )
             );
         } catch (IllegalArgumentException exception) {

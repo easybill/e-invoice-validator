@@ -1,5 +1,6 @@
 package io.github.easybill.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.helger.schematron.svrl.jaxb.FailedAssert;
 import com.helger.schematron.svrl.jaxb.SchematronOutputType;
 import java.util.Collections;
@@ -8,6 +9,8 @@ import java.util.Objects;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public record ValidatorResult(
+    @JsonProperty("name") @NonNull String name,
+    @JsonProperty("artifact_version") @NonNull String version,
     @NonNull List<@NonNull ValidationResultField> errors,
     @NonNull List<@NonNull ValidationResultField> warnings
 ) {
@@ -16,8 +19,14 @@ public record ValidatorResult(
         warnings = Collections.unmodifiableList(warnings);
     }
 
-    public static ValidatorResult of(@NonNull SchematronOutputType report) {
+    public static ValidatorResult of(
+        @NonNull String name,
+        @NonNull String version,
+        @NonNull SchematronOutputType report
+    ) {
         return new ValidatorResult(
+            name,
+            version,
             getErrorsFromSchematronOutput(report),
             getWarningsFromSchematronOutput(report)
         );
