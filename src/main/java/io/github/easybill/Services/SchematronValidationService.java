@@ -8,6 +8,7 @@ import io.github.easybill.Enums.XMLSyntaxType;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.InvalidProfileException;
 import io.github.easybill.Exceptions.InvalidXmlException;
+import io.github.easybill.Exceptions.ValidationChainException;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Singleton;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public final class SchematronValidationService
 
             return validator
                 .validate(validationRequest)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ValidationChainException::new);
         }
 
         throw new Exception(

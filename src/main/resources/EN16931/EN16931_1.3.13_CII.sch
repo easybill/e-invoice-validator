@@ -825,8 +825,8 @@
       <assert id="CII-SR-420" flag="warning" test="not(ram:NetIncludingTaxesLineTotalAmount)">[CII-SR-420] - NetIncludingTaxesLineTotalAmount should not be present</assert>
     </rule>
     <rule context="/rsm:CrossIndustryInvoice">
-      <assert id="CII-DT-013" flag="fatal" test="not(@languageID)">[CII-DT-013] - languageID should not be present</assert>
-      <assert id="CII-DT-014" flag="fatal" test="not(@languageLocaleID)">[CII-DT-014] - languageLocaleID should not be present</assert>
+      <assert id="CII-DT-013" flag="warning" test="not(@languageID)">[CII-DT-013] - languageID should not be present</assert>
+      <assert id="CII-DT-014" flag="warning" test="not(@languageLocaleID)">[CII-DT-014] - languageLocaleID should not be present</assert>
       <assert id="CII-SR-438" flag="warning" test="not(ram:ValuationBreakdownStatement)">[CII-SR-438] - ValuationBreakdownStatement should not be present</assert>
     </rule>
     <rule context="//*[ends-with(name(), 'DocumentContextParameter')]">
@@ -834,28 +834,28 @@
       <assert id="CII-SR-05" flag="warning" test="not(ram:SpecifiedDocumentVersion)">[CII-SR-005] - SpecifiedDocumentVersion should not be present</assert>
     </rule>
     <rule context="/rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext/ram:GuidelineSpecifiedDocumentContextParameter/ram:ID |            /rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:ID |            /rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:AssociatedDocumentLineDocument/ram:LineID |            /rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:SpecifiedTradeProduct/ram:SellerAssignedID">
-      <assert id="CII-DT-001" flag="fatal" test="not(@schemeName)">[CII-DT-001] - schemeName should not be present</assert>
-      <assert id="CII-DT-002" flag="fatal" test="not(@schemeAgencyName)">[CII-DT-002] - schemeAgencyName should not be present</assert>
-      <assert id="CII-DT-003" flag="fatal" test="not(@schemeDataURI)">[CII-DT-003] - schemeDataURI should not be present</assert>
-      <assert id="CII-DT-004" flag="fatal" test="not(@schemeURI)">[CII-DT-004] - schemeURI should not be present</assert>
-      <assert id="CII-DT-005" flag="fatal" test="not(@schemeID)">[CII-DT-005] - schemeID should not be present</assert>
-      <assert id="CII-DT-006" flag="fatal" test="not(@schemeAgencyID)">[CII-DT-006] - schemeAgencyID should not be present</assert>
-      <assert id="CII-DT-007" flag="fatal" test="not(@schemeVersionID)">[CII-DT-007] - schemeVersionID should not be present</assert>
+      <assert id="CII-DT-001" flag="warning" test="not(@schemeName)">[CII-DT-001] - schemeName should not be present</assert>
+      <assert id="CII-DT-002" flag="warning" test="not(@schemeAgencyName)">[CII-DT-002] - schemeAgencyName should not be present</assert>
+      <assert id="CII-DT-003" flag="warning" test="not(@schemeDataURI)">[CII-DT-003] - schemeDataURI should not be present</assert>
+      <assert id="CII-DT-004" flag="warning" test="not(@schemeURI)">[CII-DT-004] - schemeURI should not be present</assert>
+      <assert id="CII-DT-005" flag="warning" test="not(@schemeID)">[CII-DT-005] - schemeID should not be present</assert>
+      <assert id="CII-DT-006" flag="warning" test="not(@schemeAgencyID)">[CII-DT-006] - schemeAgencyID should not be present</assert>
+      <assert id="CII-DT-007" flag="warning" test="not(@schemeVersionID)">[CII-DT-007] - schemeVersionID should not be present</assert>
     </rule>
     <rule context="//ram:*[ends-with(name(), 'ID')]">
-      <assert id="CII-DT-0010" flag="fatal" test="not(@schemeName)">[CII-DT-001] - schemeName should not be present</assert>
-      <assert id="CII-DT-0020" flag="fatal" test="not(@schemeAgencyName)">[CII-DT-002] - schemeAgencyName should not be present</assert>
-      <assert id="CII-DT-0030" flag="fatal" test="not(@schemeDataURI)">[CII-DT-003] - schemeDataURI should not be present</assert>
-      <assert id="CII-DT-0040" flag="fatal" test="not(@schemeURI)">[CII-DT-004] - schemeURI should not be present</assert>
+      <assert id="CII-DT-0010" flag="warning" test="not(@schemeName)">[CII-DT-001] - schemeName should not be present</assert>
+      <assert id="CII-DT-0020" flag="warning" test="not(@schemeAgencyName)">[CII-DT-002] - schemeAgencyName should not be present</assert>
+      <assert id="CII-DT-0030" flag="warning" test="not(@schemeDataURI)">[CII-DT-003] - schemeDataURI should not be present</assert>
+      <assert id="CII-DT-0040" flag="warning" test="not(@schemeURI)">[CII-DT-004] - schemeURI should not be present</assert>
     </rule>
     <rule context="//ram:TypeCode">
-      <assert id="CII-DT-008" flag="fatal" test="not(@name)">[CII-DT-008] - name should not be present</assert>
-      <assert id="CII-DT-009" flag="fatal" test="not(@listURI)">[CII-DT-009] - listURI should not be present</assert>
+      <assert id="CII-DT-008" flag="warning" test="not(@name)">[CII-DT-008] - name should not be present</assert>
+      <assert id="CII-DT-009" flag="warning" test="not(@listURI)">[CII-DT-009] - listURI should not be present</assert>
     </rule>
     <rule context="/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:TypeCode">
-      <assert id="CII-DT-010" flag="fatal" test="not(@listID)">[CII-DT-010] - listID should not be present</assert>
-      <assert id="CII-DT-011" flag="fatal" test="not(@listAgencyID)">[CII-DT-011] - listAgencyID should not be present</assert>
-      <assert id="CII-DT-012" flag="fatal" test="not(@listVersionID)">[CII-DT-012] - listVersionID should not be present</assert>
+      <assert id="CII-DT-010" flag="warning" test="not(@listID)">[CII-DT-010] - listID should not be present</assert>
+      <assert id="CII-DT-011" flag="warning" test="not(@listAgencyID)">[CII-DT-011] - listAgencyID should not be present</assert>
+      <assert id="CII-DT-012" flag="warning" test="not(@listVersionID)">[CII-DT-012] - listVersionID should not be present</assert>
     </rule>
     <rule context="/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:SpecifiedLineTradeSettlement/ram:ApplicableTradeTax/ram:CategoryCode">
       <assert id="CII-DT-045" flag="warning" test="not(@listID)">[CII-DT-045] - @listID should not be present</assert>
@@ -864,32 +864,32 @@
       <assert id="CII-DT-048" flag="warning" test="not(@listURI)">[CII-DT-048] - @listURI should not be present</assert>
     </rule>
     <rule context="//ram:*[ends-with(name(), 'ReferencedDocument')]">
-      <assert id="CII-DT-015" flag="fatal" test="not(ram:URIID) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-015] - URIID should not be present</assert>
-      <assert id="CII-DT-016" flag="fatal" test="not(ram:StatusCode)">[CII-DT-016] - StatusCode should not be present</assert>
-      <assert id="CII-DT-017" flag="fatal" test="not(ram:CopyIndicator)">[CII-DT-017] - CopyIndicator should not be present</assert>
-      <assert id="CII-DT-018" flag="fatal" test="not(ram:TypeCode) or (self::ram:AdditionalReferencedDocument) and (ram:TypeCode='50' or ram:TypeCode='130' or ram:TypeCode='916')">[CII-DT-018] - TypeCode should not be present</assert>
-      <assert id="CII-DT-019" flag="fatal" test="not(ram:GlobalID)">[CII-DT-019] - GlobalID should not be present</assert>
-      <assert id="CII-DT-020" flag="fatal" test="not(ram:RevisionID)">[CII-DT-020] - RevisionID should not be present</assert>
-      <assert id="CII-DT-021" flag="fatal" test="not(ram:Name) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-021] - Name should not be present</assert>
-      <assert id="CII-DT-022" flag="fatal" test="not(ram:AttachmentBinaryObject) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-022] - AttachmentBinaryObject should not be present</assert>
-      <assert id="CII-DT-023" flag="fatal" test="not(ram:Information)">[CII-DT-023] - Information should not be present</assert>
-      <assert id="CII-DT-024" flag="fatal" test="not(ram:ReferenceTypeCode) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='130')">[CII-DT-024] - ReferenceTypeCode should not be present</assert>
-      <assert id="CII-DT-025" flag="fatal" test="not(ram:SectionName)">[CII-DT-025] - SectionName should not be present</assert>
-      <assert id="CII-DT-026" flag="fatal" test="not(ram:PreviousRevisionID)">[CII-DT-026] - PreviousRevisionID should not be present</assert>
-      <assert id="CII-DT-027" flag="fatal" test="not(ram:FormattedIssueDateTime) or self::ram:InvoiceReferencedDocument">[CII-DT-027] - FormattedIssueDateTime should not be present</assert>
-      <assert id="CII-DT-028" flag="fatal" test="not(ram:EffectiveSpecifiedPeriod)">[CII-DT-028] - EffectiveSpecifiedPeriod should not be present</assert>
-      <assert id="CII-DT-029" flag="fatal" test="not(ram:IssuerTradeParty)">[CII-DT-029] - IssuerTradeParty should not be present</assert>
-      <assert id="CII-DT-030" flag="fatal" test="not(ram:AttachedSpecifiedBinaryFile)">[CII-DT-030] - AttachedSpecifiedBinaryFile should not be present</assert>
+      <assert id="CII-DT-015" flag="warning" test="not(ram:URIID) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-015] - URIID should not be present</assert>
+      <assert id="CII-DT-016" flag="warning" test="not(ram:StatusCode)">[CII-DT-016] - StatusCode should not be present</assert>
+      <assert id="CII-DT-017" flag="warning" test="not(ram:CopyIndicator)">[CII-DT-017] - CopyIndicator should not be present</assert>
+      <assert id="CII-DT-018" flag="warning" test="not(ram:TypeCode) or (self::ram:AdditionalReferencedDocument) and (ram:TypeCode='50' or ram:TypeCode='130' or ram:TypeCode='916')">[CII-DT-018] - TypeCode should not be present</assert>
+      <assert id="CII-DT-019" flag="warning" test="not(ram:GlobalID)">[CII-DT-019] - GlobalID should not be present</assert>
+      <assert id="CII-DT-020" flag="warning" test="not(ram:RevisionID)">[CII-DT-020] - RevisionID should not be present</assert>
+      <assert id="CII-DT-021" flag="warning" test="not(ram:Name) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-021] - Name should not be present</assert>
+      <assert id="CII-DT-022" flag="warning" test="not(ram:AttachmentBinaryObject) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='916')">[CII-DT-022] - AttachmentBinaryObject should not be present</assert>
+      <assert id="CII-DT-023" flag="warning" test="not(ram:Information)">[CII-DT-023] - Information should not be present</assert>
+      <assert id="CII-DT-024" flag="warning" test="not(ram:ReferenceTypeCode) or (self::ram:AdditionalReferencedDocument and ram:TypeCode='130')">[CII-DT-024] - ReferenceTypeCode should not be present</assert>
+      <assert id="CII-DT-025" flag="warning" test="not(ram:SectionName)">[CII-DT-025] - SectionName should not be present</assert>
+      <assert id="CII-DT-026" flag="warning" test="not(ram:PreviousRevisionID)">[CII-DT-026] - PreviousRevisionID should not be present</assert>
+      <assert id="CII-DT-027" flag="warning" test="not(ram:FormattedIssueDateTime) or self::ram:InvoiceReferencedDocument">[CII-DT-027] - FormattedIssueDateTime should not be present</assert>
+      <assert id="CII-DT-028" flag="warning" test="not(ram:EffectiveSpecifiedPeriod)">[CII-DT-028] - EffectiveSpecifiedPeriod should not be present</assert>
+      <assert id="CII-DT-029" flag="warning" test="not(ram:IssuerTradeParty)">[CII-DT-029] - IssuerTradeParty should not be present</assert>
+      <assert id="CII-DT-030" flag="warning" test="not(ram:AttachedSpecifiedBinaryFile)">[CII-DT-030] - AttachedSpecifiedBinaryFile should not be present</assert>
     </rule>
     <rule context="//ram:*[ends-with(name(), 'Amount') and not (self::ram:TaxTotalAmount)]">
-      <assert id="CII-DT-031" flag="fatal" test="not(@currencyID)">[CII-DT-031] - currencyID should not be present</assert>
-      <assert id="CII-DT-032" flag="fatal" test="not(@currencyCodeListVersionID)">[CII-DT-032] - currencyCodeListVersionID should not be present</assert>
+      <assert id="CII-DT-031" flag="warning" test="not(@currencyID)">[CII-DT-031] - currencyID should not be present</assert>
+      <assert id="CII-DT-032" flag="warning" test="not(@currencyCodeListVersionID)">[CII-DT-032] - currencyCodeListVersionID should not be present</assert>
     </rule>
     <rule context="//ram:*[ends-with(name(), 'Quantity')]">
-      <assert id="CII-DT-033" flag="fatal" test="not(@unitCode) or (/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:SpecifiedLineTradeDelivery/ram:BilledQuantity/@unitCode)">[CII-DT-033] - unitCode should not be present</assert>
-      <assert id="CII-DT-034" flag="fatal" test="not(@unitCodeListID)">[CII-DT-034] - unitCodeListID should not be present</assert>
-      <assert id="CII-DT-035" flag="fatal" test="not(@unitCodeListAgencyID)">[CII-DT-035] - unitCodeListAgencyID should not be present</assert>
-      <assert id="CII-DT-036" flag="fatal" test="not(@unitCodeListAgencyName)">[CII-DT-036] - unitCodeListAgencyName should not be present</assert>
+      <assert id="CII-DT-033" flag="warning" test="not(@unitCode) or (/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:IncludedSupplyChainTradeLineItem/ram:SpecifiedLineTradeDelivery/ram:BilledQuantity/@unitCode)">[CII-DT-033] - unitCode should not be present</assert>
+      <assert id="CII-DT-034" flag="warning" test="not(@unitCodeListID)">[CII-DT-034] - unitCodeListID should not be present</assert>
+      <assert id="CII-DT-035" flag="warning" test="not(@unitCodeListAgencyID)">[CII-DT-035] - unitCodeListAgencyID should not be present</assert>
+      <assert id="CII-DT-036" flag="warning" test="not(@unitCodeListAgencyName)">[CII-DT-036] - unitCodeListAgencyName should not be present</assert>
     </rule>
     <rule context="//ram:*[ends-with(name(), 'TradeTax')]">
       <assert id="CII-DT-037" flag="fatal" test="not(ram:TypeCode) or (ram:TypeCode = 'VAT')">[CII-DT-037] - TypeCode shall be 'VAT'</assert>

@@ -6,6 +6,8 @@ import com.helger.schematron.sch.SchematronResourceSCH;
 import io.github.easybill.Contracts.ISchematronValidator;
 import io.github.easybill.Dtos.ValidationRequest;
 import io.github.easybill.Dtos.ValidationResult;
+import io.github.easybill.Dtos.ValidatorResults.EN16931ValidatorResult;
+import io.github.easybill.Dtos.ValidatorResults.XRechnungValidatorResult;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.ParsingException;
 import jakarta.inject.Singleton;
@@ -15,27 +17,51 @@ import java.util.Optional;
 public final class XRechnungSchematronValidator
     implements ISchematronValidator {
 
-    private final SchematronResourceSCH ciiSchematron;
-    private final SchematronResourceSCH ublSchematron;
+    private final SchematronResourceSCH en16931CiiSchematron;
+    private final SchematronResourceSCH en16931UblSchematron;
+    private final SchematronResourceSCH xRechnungCiiSchematron;
+    private final SchematronResourceSCH xRechnungUblSchematron;
 
     public XRechnungSchematronValidator() {
-        ciiSchematron =
+        en16931CiiSchematron =
+            new SchematronResourceSCH(
+                new ClassPathResource("/EN16931/EN16931_1.3.13_CII.sch")
+            );
+
+        en16931UblSchematron =
+            new SchematronResourceSCH(
+                new ClassPathResource("/EN16931/EN16931_1.3.13_UBL.sch")
+            );
+
+        xRechnungCiiSchematron =
             new SchematronResourceSCH(
                 new ClassPathResource("/XRechnung/XRechnung_3.2_CII.sch")
             );
 
-        ublSchematron =
+        xRechnungUblSchematron =
             new SchematronResourceSCH(
                 new ClassPathResource("/XRechnung/XRechnung_3.2_UBL.sch")
             );
 
-        if (!ciiSchematron.isValidSchematron()) {
+        if (!en16931CiiSchematron.isValidSchematron()) {
+            throw new RuntimeException(
+                "Schematron validation for EN16931 CII failed"
+            );
+        }
+
+        if (!en16931UblSchematron.isValidSchematron()) {
+            throw new RuntimeException(
+                "Schematron validation for EN16931 UBL failed"
+            );
+        }
+
+        if (!xRechnungCiiSchematron.isValidSchematron()) {
             throw new RuntimeException(
                 "Schematron validation for XRechnung CII failed"
             );
         }
 
-        if (!ublSchematron.isValidSchematron()) {
+        if (!xRechnungUblSchematron.isValidSchematron()) {
             throw new RuntimeException(
                 "Schematron validation for XRechnung UBL failed"
             );
@@ -44,11 +70,11 @@ public final class XRechnungSchematronValidator
 
     @Override
     public boolean validateSchematron() {
-        if (!ciiSchematron.isValidSchematron()) {
+        if (!xRechnungCiiSchematron.isValidSchematron()) {
             return false;
         }
 
-        if (!ublSchematron.isValidSchematron()) {
+        if (!xRechnungUblSchematron.isValidSchematron()) {
             return false;
         }
 
@@ -72,25 +98,44 @@ public final class XRechnungSchematronValidator
         );
 
         try {
-            var report =
+            var en16931Report =
                 switch (validationRequest.xmlSyntaxType()) {
                     case CII -> Optional.ofNullable(
-                        ciiSchematron.applySchematronValidationToSVRL(
+                        en16931CiiSchematron.applySchematronValidationToSVRL(
                             bytesWrapper
                         )
                     );
                     case UBL -> Optional.ofNullable(
-                        ublSchematron.applySchematronValidationToSVRL(
+                        en16931UblSchematron.applySchematronValidationToSVRL(
                             bytesWrapper
                         )
                     );
                 };
 
-            return report.map(schematronOutputType ->
+            if (en16931Report.isEmpty()) {
+                return Optional.empty();
+            }
+
+            var xRechnungReport =
+                switch (validationRequest.xmlSyntaxType()) {
+                    case CII -> Optional.ofNullable(
+                        xRechnungCiiSchematron.applySchematronValidationToSVRL(
+                            bytesWrapper
+                        )
+                    );
+                    case UBL -> Optional.ofNullable(
+                        xRechnungUblSchematron.applySchematronValidationToSVRL(
+                            bytesWrapper
+                        )
+                    );
+                };
+
+            return xRechnungReport.map(schematronOutputType ->
                 ValidationResult.of(
                     XmlProfileType.XRECHNUNG_30,
                     validationRequest,
-                    schematronOutputType
+                    EN16931ValidatorResult.of(en16931Report.get()),
+                    XRechnungValidatorResult.of(schematronOutputType)
                 )
             );
         } catch (IllegalArgumentException exception) {

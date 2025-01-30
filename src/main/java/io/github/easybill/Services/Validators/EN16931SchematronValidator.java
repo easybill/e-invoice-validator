@@ -6,6 +6,7 @@ import com.helger.schematron.sch.SchematronResourceSCH;
 import io.github.easybill.Contracts.ISchematronValidator;
 import io.github.easybill.Dtos.ValidationRequest;
 import io.github.easybill.Dtos.ValidationResult;
+import io.github.easybill.Dtos.ValidatorResults.EN16931ValidatorResult;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.ParsingException;
 import jakarta.inject.Singleton;
@@ -87,7 +88,7 @@ public final class EN16931SchematronValidator implements ISchematronValidator {
                 ValidationResult.of(
                     XmlProfileType.EN16931,
                     validationRequest,
-                    schematronOutputType
+                    EN16931ValidatorResult.of(schematronOutputType)
                 )
             );
         } catch (IllegalArgumentException exception) {

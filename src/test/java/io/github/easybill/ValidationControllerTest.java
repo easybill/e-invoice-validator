@@ -72,7 +72,7 @@ class ValidationControllerTest {
             .statusCode(200)
             .contentType(ContentType.JSON)
             .body("is_valid", equalTo(false))
-            .body("errors", not(empty()));
+            .body("validation_results[0].errors", not(empty()));
     }
 
     static Stream<Arguments> providerValuesForDifferentEncodings() {
@@ -96,8 +96,7 @@ class ValidationControllerTest {
             .then()
             .statusCode(200)
             .contentType(ContentType.JSON)
-            .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("is_valid", equalTo(true));
     }
 
     @ParameterizedTest
@@ -144,7 +143,7 @@ class ValidationControllerTest {
                 equalTo(XmlProfileType.EN16931.name())
             )
             .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("validation_results[0].errors", empty());
     }
 
     @ParameterizedTest
@@ -164,7 +163,7 @@ class ValidationControllerTest {
                 equalTo(XmlProfileType.EN16931.name())
             )
             .body("is_valid", equalTo(false))
-            .body("errors", not(empty()));
+            .body("validation_results[0].errors", not(empty()));
     }
 
     @ParameterizedTest
@@ -191,16 +190,13 @@ class ValidationControllerTest {
             .statusCode(200)
             .contentType(ContentType.JSON)
             .body("meta.xml_syntax_type", equalTo(XMLSyntaxType.CII.name()))
-            .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("is_valid", equalTo(true));
     }
 
     @ParameterizedTest
     @ValueSource(
         strings = {
-            "FacturX/FacturX_001.xml",
             "FacturX/FacturX_003.xml",
-            "FacturX/FacturX_008.xml",
             "FacturX/FacturX_014.xml",
             "FacturX/FacturX_015.xml",
             "FacturX/FacturX_018.xml",
@@ -221,8 +217,29 @@ class ValidationControllerTest {
                 "meta.xml_profile_type",
                 equalTo(XmlProfileType.FACTURX_EXTENDED.name())
             )
-            .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("is_valid", equalTo(true));
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = { "FacturX/FacturX_001.xml", "FacturX/FacturX_008.xml" }
+    )
+    void testInvalidFacturXExtendedDocuments(@NonNull String fixtureFileName)
+        throws IOException {
+        given()
+            .body(loadFixtureFileAsStream(fixtureFileName))
+            .contentType(ContentType.XML)
+            .when()
+            .post("/validation")
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON)
+            .body("meta.xml_syntax_type", equalTo(XMLSyntaxType.CII.name()))
+            .body(
+                "meta.xml_profile_type",
+                equalTo(XmlProfileType.FACTURX_EXTENDED.name())
+            )
+            .body("is_valid", equalTo(false));
     }
 
     @ParameterizedTest
@@ -285,8 +302,7 @@ class ValidationControllerTest {
                 "meta.xml_profile_type",
                 equalTo(XmlProfileType.PEPPOL_30.name())
             )
-            .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("is_valid", equalTo(true));
     }
 
     @ParameterizedTest
@@ -312,8 +328,7 @@ class ValidationControllerTest {
                 "meta.xml_profile_type",
                 equalTo(XmlProfileType.PEPPOL_30.name())
             )
-            .body("is_valid", equalTo(false))
-            .body("errors", not(empty()));
+            .body("is_valid", equalTo(false));
     }
 
     @ParameterizedTest
@@ -339,8 +354,7 @@ class ValidationControllerTest {
                 "meta.xml_profile_type",
                 equalTo(XmlProfileType.XRECHNUNG_30.name())
             )
-            .body("is_valid", equalTo(true))
-            .body("errors", empty());
+            .body("is_valid", equalTo(true));
     }
 
     @ParameterizedTest
@@ -383,8 +397,7 @@ class ValidationControllerTest {
             .then()
             .statusCode(200)
             .contentType(ContentType.JSON)
-            .body("is_valid", equalTo(false))
-            .body("errors", not(empty()));
+            .body("is_valid", equalTo(false));
     }
 
     InputStream loadFixtureFileAsStream(@NonNull String fixtureFileName)
