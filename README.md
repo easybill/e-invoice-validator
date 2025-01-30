@@ -11,9 +11,10 @@ provided XML is valid (200) or has issues (400). UBL and CII is supported.
 ### Currently supported validation artifacts:
 
 - EN16931 v1.3.13
-- factur-x v1.07.2
 - XRechnung v3.2
 - Peppol BIS 3.0
+- factur-x v1.07.2
+    - (only the profiles EN16931 and EXTENDED are supported)
 
 ## Usage
 This service was mainly designed with containerization in mind. So general idea is to use the following
