@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.easybill.Dtos.ValidatorResults.ValidatorResult;
 import io.github.easybill.Enums.XmlProfileType;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -13,6 +14,17 @@ public record ValidationResult(
     @NonNull
     List<@NonNull ValidatorResult> validationResults
 ) {
+    public ValidationResult(
+        @NonNull ValidationResultMetaData meta,
+        @JsonProperty(
+            "validation_results"
+        ) @NonNull List<@NonNull ValidatorResult> validationResults
+    ) {
+        this.meta = meta;
+        this.validationResults =
+            Collections.unmodifiableList(validationResults);
+    }
+
     @JsonProperty("is_valid")
     public boolean isValid() {
         return validationResults
