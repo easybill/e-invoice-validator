@@ -74,11 +74,23 @@ final class EN16931Validator
 ```JSON
 {
   "meta": {
-    "xml_syntax_type": "CII",
-    "xml_profile_type": "FACTURX_EXTENDED"
+    "xml_syntax_type": "UBL",
+    "xml_profile_type": "PEPPOL_30"
   },
-  "errors": [],
-  "warnings": [],
+  "validation_results": [
+    {
+      "name": "EN16931",
+      "version": "1.3.13",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "name": "Peppol BIS",
+      "version": "3.0",
+      "warnings": [],
+      "errors": []
+    }
+  ],
   "is_valid": true
 }
 ```
@@ -89,28 +101,32 @@ final class EN16931Validator
 ```JSON
 {
   "meta": {
-    "xml_syntax_type": "CII",
-    "xml_profile_type": "EN16931"
+    "xml_syntax_type": "UBL",
+    "xml_profile_type": "PEPPOL_30"
   },
-  "errors": [
+  "validation_results": [
     {
-      "rule_id": "BR-CO-15",
-      "rule_location": "/*:CrossIndustryInvoice[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]",
-      "rule_severity": "FATAL",
-      "rule_messages": [
-        "[BR-CO-15]-Invoice total amount with VAT (BT-112) = Invoice total amount without VAT (BT-109) + Invoice total VAT amount (BT-110)."
+      "name": "EN16931",
+      "version": "1.3.13",
+      "warnings": [],
+      "errors": [
+        {
+          "rule_id": "BR-CL-14",
+          "rule_location": "/*:Invoice[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:Invoice-2'][1]/*:AccountingSupplierParty[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'][1]/*:Party[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'][1]/*:PostalAddress[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'][1]/*:Country[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2'][1]/*:IdentificationCode[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'][1]",
+          "rule_severity": "FATAL",
+          "rule_messages": [
+            "[BR-CL-14]-Country codes in an invoice MUST be coded using ISO code list 3166-1"
+          ]
+        }
       ]
     },
     {
-      "rule_id": "BR-CL-04",
-      "rule_location": "/*:CrossIndustryInvoice[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]/*:SupplyChainTradeTransaction[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]/*:ApplicableHeaderTradeSettlement[namespace-uri()='urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100'][1]/*:InvoiceCurrencyCode[namespace-uri()='urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100'][1]",
-      "rule_severity": "FATAL",
-      "rule_messages": [
-        "[BR-CL-04]-Invoice currency code MUST be coded using ISO code list 4217 alpha-3"
-      ]
+      "name": "Peppol BIS",
+      "version": "3.0",
+      "warnings": [],
+      "errors": []
     }
   ],
-  "warnings": [],
   "is_valid": false
 }
 ```
