@@ -1,6 +1,7 @@
 package io.github.easybill.Dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.github.easybill.Dtos.ValidatorResults.ValidatorResult;
 import io.github.easybill.Enums.XmlProfileType;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ public record ValidationResult(
     public boolean isValid() {
         return validationResults
             .stream()
-            .allMatch(element -> element.errors().isEmpty());
+            .allMatch(element -> element.getErrors().isEmpty());
     }
 
     public static ValidationResult of(

@@ -6,7 +6,8 @@ import com.helger.schematron.sch.SchematronResourceSCH;
 import io.github.easybill.Contracts.ISchematronValidator;
 import io.github.easybill.Dtos.ValidationRequest;
 import io.github.easybill.Dtos.ValidationResult;
-import io.github.easybill.Dtos.ValidatorResult;
+import io.github.easybill.Dtos.ValidatorResults.EN16931ValidatorResult;
+import io.github.easybill.Dtos.ValidatorResults.XRechnungValidatorResult;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.ParsingException;
 import jakarta.inject.Singleton;
@@ -133,22 +134,8 @@ public final class XRechnungSchematronValidator
                 ValidationResult.of(
                     XmlProfileType.XRECHNUNG_30,
                     validationRequest,
-                    ValidatorResult.of(
-                        String.format(
-                            "EN16931 %s",
-                            validationRequest.xmlSyntaxType()
-                        ),
-                        "1.3.13",
-                        en16931Report.get()
-                    ),
-                    ValidatorResult.of(
-                        String.format(
-                            "XRechnung %s",
-                            validationRequest.xmlSyntaxType()
-                        ),
-                        "3.2",
-                        schematronOutputType
-                    )
+                    EN16931ValidatorResult.of(en16931Report.get()),
+                    XRechnungValidatorResult.of(schematronOutputType)
                 )
             );
         } catch (IllegalArgumentException exception) {

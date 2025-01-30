@@ -6,7 +6,8 @@ import com.helger.schematron.sch.SchematronResourceSCH;
 import io.github.easybill.Contracts.ISchematronValidator;
 import io.github.easybill.Dtos.ValidationRequest;
 import io.github.easybill.Dtos.ValidationResult;
-import io.github.easybill.Dtos.ValidatorResult;
+import io.github.easybill.Dtos.ValidatorResults.EN16931ValidatorResult;
+import io.github.easybill.Dtos.ValidatorResults.FacturXValidatorResult;
 import io.github.easybill.Enums.XMLSyntaxType;
 import io.github.easybill.Enums.XmlProfileType;
 import io.github.easybill.Exceptions.ParsingException;
@@ -86,16 +87,8 @@ public final class FacturXSchematronValidator implements ISchematronValidator {
                 ValidationResult.of(
                     XmlProfileType.FACTURX_EXTENDED,
                     validationRequest,
-                    ValidatorResult.of(
-                        "EN16931 CII",
-                        "1.3.13",
-                        en16931Report.get()
-                    ),
-                    ValidatorResult.of(
-                        "factur-x CII EXTENDED",
-                        "1.07.2",
-                        schematronOutputType
-                    )
+                    EN16931ValidatorResult.of(en16931Report.get()),
+                    FacturXValidatorResult.of(schematronOutputType)
                 )
             );
         } catch (IllegalArgumentException exception) {
