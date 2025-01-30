@@ -4,11 +4,16 @@
 
 ## Introduction
 `e-invoice-validator` is a small service for validating XML against the official
-EN16931 schematron rules. It exposes a validation endpoint which takes the
+schematron rules of factur-x, Peppol BIS, XRechnung and EN16931. It exposes a validation endpoint which takes the
 to be validated XML and returns a JSON payload which contains possible warnings or errors. The HTTP status code indicates if the
 provided XML is valid (200) or has issues (400). UBL and CII is supported.
 
-### Currently supported validation artifacts: [v1.3.13](https://github.com/ConnectingEurope/eInvoicing-EN16931/releases/tag/validation-1.3.13)
+### Currently supported validation artifacts:
+
+- EN16931 v1.3.13
+- factur-x v1.07.2
+- XRechnung v3.2
+- Peppol BIS 3.0
 
 ## Usage
 This service was mainly designed with containerization in mind. So general idea is to use the following
@@ -63,22 +68,44 @@ final class EN16931Validator
     }
 }
 ```
+- Example response in case the XML is valid
+
+```JSON
+{
+  "meta": {
+    "xml_syntax_type": "CII",
+    "xml_profile_type": "FACTURX_EXTENDED"
+  },
+  "errors": [],
+  "warnings": [],
+  "is_valid": true
+}
+```
+
 
 - Example response in case the XML is invalid
 
 ```JSON
 {
   "meta": {
-    "validation_profile": "UBL",
-    "validation_profile_version": "1.3.13"
+    "xml_syntax_type": "CII",
+    "xml_profile_type": "EN16931"
   },
   "errors": [
     {
-      "rule_id": "BR-03",
-      "rule_location": "/*:Invoice[namespace-uri()='urn:oasis:names:specification:ubl:schema:xsd:Invoice-2'][1]",
+      "rule_id": "BR-CO-15",
+      "rule_location": "/*:CrossIndustryInvoice[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]",
       "rule_severity": "FATAL",
       "rule_messages": [
-        "[BR-03]-An Invoice shall have an Invoice issue date (BT-2)."
+        "[BR-CO-15]-Invoice total amount with VAT (BT-112) = Invoice total amount without VAT (BT-109) + Invoice total VAT amount (BT-110)."
+      ]
+    },
+    {
+      "rule_id": "BR-CL-04",
+      "rule_location": "/*:CrossIndustryInvoice[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]/*:SupplyChainTradeTransaction[namespace-uri()='urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'][1]/*:ApplicableHeaderTradeSettlement[namespace-uri()='urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100'][1]/*:InvoiceCurrencyCode[namespace-uri()='urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100'][1]",
+      "rule_severity": "FATAL",
+      "rule_messages": [
+        "[BR-CL-04]-Invoice currency code MUST be coded using ISO code list 4217 alpha-3"
       ]
     }
   ],
